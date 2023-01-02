@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<link>
+<html>
 
 <head>
     <link rel="stylesheet" href="css/index.css">
     <link rel="shortcut icon" type="image/x-icon" href="src/favicon.jfif">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free video/cartoon/movie streaming! Sign Up Required!">
+    <meta name="keywords" content="video, free, streaming, signup, datastore">
 
     <title>EmpireZ - Streaming</title>
+
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBZS96HY08"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TBZS96HY08');
+</script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6525145895161673" crossorigin="anonymous"></script>
 </head>
 
 <body class="Background">
@@ -16,7 +30,7 @@
     <div class="container">
         <image class="logo_nav" src="src/EmpireZ.png"></image>
         
-        <image class="Sign_up" src="src/image-removebg-preview.png"></image>
+        <image class="Sign_up" id="pfp" src="src/image-removebg-preview.png"></image>
 
         <div class="Nav_Text">
         <ul >
@@ -81,36 +95,54 @@
     </div>
     </div>
 
+    </body>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js';
-        import { getAuth, onAuthStateChanged,  } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js';
-        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js'
-
-        const firebase = initializeApp({
-            apiKey: "AIzaSyCKp0SfJmixmwfndx5RlG43CDSMNCAhMVY",
-            authDomain: "empirez.firebaseapp.com",
-            projectId: "empirez",
-            storageBucket: "empirez.appspot.com",
-            messagingSenderId: "47991504506",
-            appId: "1:47991504506:web:61455db573015177af85c3",
-            measurementId: "G-DJPE51KXD3",
-        });
-        const auth = getAuth(firebase);
-
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                console.log('Logged in as');
-            } else {
-                console.log('No User');
-            }
-        });
-
-    </script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-       <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
-
-</body>
 </html>
 
-<script src="js/index.js"></script>
+<script type="Module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDjzRH-b7H8WC22RJ_4EToUFYcbfYu5ntQ",
+        authDomain: "empirez---login.firebaseapp.com",
+        databaseURL: "https://empirez---login-default-rtdb.firebaseio.com",
+        projectId: "empirez---login",
+        storageBucket: "empirez---login.appspot.com",
+        messagingSenderId: "151017816130",
+        appId: "1:151017816130:web:dc6602378da2eef2556ddb",
+    };
+    const app = initializeApp(firebaseConfig);
+    const Database = getDatabase(app);
+    
+    const auth = getAuth();
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            console.log(user)
+            if (user.email !== null && user.email == "empirez.ihcr@gmail.com" || user.email == "butfur69@gmail.com" || user.email == "mebob248888@gmail.com") {
+                    set(ref(Database, "users/" + user.uid + "/permissions"), {
+                        admin: true
+                    })
+            }else{
+                    set(ref(Database, "users/" + user.uid + "/permissions"), {
+                        admin: false
+                    })
+                }
+        }else{
+            
+        }
+        
+    });
+
+    pfp.onclick = function e() {
+        if (auth.currentUser){
+            if (window.confirm("Logout?")){
+                window.location.assign("auth/logout.html")
+            }
+        }else{
+            window.location.assign("auth/signup.html")
+        }
+    }
+
+</script>
